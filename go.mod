@@ -6,7 +6,6 @@ require (
 	github.com/alecthomas/jsonschema v0.0.0-20220216202328-9eeeec9d044b
 	github.com/falcosecurity/plugin-sdk-go v0.5.0
 	github.com/hashicorp/nomad/api v0.0.0-20220706213518-545ee5608474
-	golang.org/x/exp/event v0.0.0-20220706164943-b4a6d9510983
 )
 
 require (
