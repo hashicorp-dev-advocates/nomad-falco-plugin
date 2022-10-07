@@ -1,0 +1,24 @@
+
+- required_engine_version: 15
+
+- required_plugin_versions:
+  - name: nomad
+    version: 0.1.0
+
+- list: allowed_images
+  items:
+    - redis:3.2
+    - nginx:latest
+
+- macro: nomad_job_registered
+  condition: nomad.topic = "Job" and nomad.type = "JobRegistered"
+
+- macro: nomad_job_images_allowed
+  condition: nomad.job.images intersects (allowed_images)
+
+- rule: Nomad job registered with non-allowed image
+  desc: Check wether a Nomad job registration contains a Docker image that is not in the allowed list of images
+  condition: nomad_job_registered and not nomad_job_images_allowed
+  output: 'index=%nomad.index, topic=%nomad.topic, type=%nomad.type, images=%nomad.job.images'
+  priority: WARNING
+  source: nomad
